@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ECom.DataAccess.Data;
 using ECom.Models;
 
+[Authorize(Roles = "Admin")]
 namespace EComWeb.Controllers
 {
     public class ProductsController : Controller
