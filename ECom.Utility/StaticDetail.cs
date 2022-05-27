@@ -1,4 +1,6 @@
-﻿namespace ECom.Utility;
+﻿using Microsoft.AspNetCore.Hosting;
+
+namespace ECom.Utility;
 
 public static class StaticDetail
 {
@@ -6,8 +8,5 @@ public static class StaticDetail
     public const string RoleAdmin = "Admin";
     public const string AdminEmail = "admin@ecomweb.com";
     public const string AdminPassword = "Admin123!";
-    public static string CloudinaryCloudName;
-    public static string CloudinaryApiKey;
-    public static string CloudinaryApiSecret;
-    public static string CloudinaryApiEnvironmentVariable;
+    public static IServiceProvider ServiceProvider;
 }

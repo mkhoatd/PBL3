@@ -28,6 +28,9 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Specification)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
@@ -67,6 +70,16 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
+                @if(item.Specification !=null)
+                {
+                    <a asp-controller="Specifications" asp-action="Details" asp-route-id="@item.Specification.Id">See Specification</a>
+                }
+                else
+                {
+                    <text>No Specification</text>
+                }
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
@@ -88,6 +101,7 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-controller="Specifications" asp-action="Create", asp-route-id="@item.Id">Add Specification</a>
             </td>
         </tr>
 }

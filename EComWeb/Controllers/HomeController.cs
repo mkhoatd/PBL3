@@ -19,7 +19,7 @@ namespace EComWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Manufacture);
+            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Manufacture).Include(p=>p.Specification);
             return View(await applicationDbContext.ToListAsync());
         }
 

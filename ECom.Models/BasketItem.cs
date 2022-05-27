@@ -11,7 +11,7 @@ namespace ECom.Models
         public decimal Price { get; set; }
         public int Quantity {get; set;}
         public int BasketId {get; set;}
-        public Basket Basket { get; set; }
+        public Basket? Basket { get; set; }
         public void UpdatePrice()
         {
             Price=Convert.ToDecimal(Product.Price*Quantity);   

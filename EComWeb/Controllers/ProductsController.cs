@@ -27,7 +27,7 @@ namespace EComWeb.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Manufacture);
+            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Manufacture).Include(p=>p.Specification);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -42,6 +42,7 @@ namespace EComWeb.Controllers
             var product = await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Manufacture)
+                .Include(p=>p.Specification)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
@@ -64,7 +65,7 @@ namespace EComWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,Image,IsDeleted")] Product product)
+        public async Task<IActionResult> Create([Bind("Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,Image,IsDeleted")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -91,12 +92,12 @@ namespace EComWeb.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.Include(p=>p.Specification).FirstOrDefaultAsync(p=>p.Id==id);
             if (product == null)
             {
                 return NotFound();
@@ -111,13 +112,12 @@ namespace EComWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,ImageUrl,IsDeleted")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,Image,IsDeleted")] Product product)
         {
             if (id != product.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try

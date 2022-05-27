@@ -12,6 +12,6 @@ namespace ECom.Models
         public string Screen {get; set;}
         public string Camera {get; set;}
         public int ProductId { get; set; }
-        public Product Product {get; set;}
+        public Product? Product {get; set;}
     }
 }

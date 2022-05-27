@@ -62,6 +62,8 @@ builder.Services.ConfigureApplicationCookie(options=>
 
 var app = builder.Build();
 
+StaticDetail.ServiceProvider = app.Services;
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
