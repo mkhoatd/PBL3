@@ -1,4 +1,4 @@
-﻿@model ECom.Models.UserRolesViewMode
+﻿@model EComWeb.ViewModels.UserRolesViewMode
 
 @{
     ViewData["Title"] = "User Roles Manager for User " + @Model.Username;
@@ -11,34 +11,9 @@
         <form asp-controller="UserRoles" method="post" asp-action="Index" asp-route-id="@Model.UserId" class="d-inline">
             <input asp-for="@Model.UserId" type="hidden" />
             <input asp-for="@Model.Username" type="hidden"/>
-            <table class="table table-striped" id="userRolesTable">
-                <thead>
-                    <tr>
-                        <th>
-                            Role
-                        </th>
-                        <th>
-                            Status
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.RoleNames.Count; i++)
-                    {
-                        <tr>
-                            <td>
-                                <input asp-for="@Model.RoleNames[i]" type="hidden" />
-                                @Model.RoleNames[i]
-                            </td>
-                            <td>
-                                <div class="form-check m-1">
-                                    <input type="radio" asp-for="@Model.SelectedRole" value="@i" class="form-check-input" />
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            <select asp-for="@Model.Roles">
+                <option disabled selected>--Select Category--</option>
+            </select>
             <div class="col-sm-12" style=" padding: 20px 20px 0px 0px">
                 <button type="submit" id="save" class="btn bg-primary">
                     <i class="fa fa-check"></i>

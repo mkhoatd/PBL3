@@ -1,4 +1,5 @@
 ﻿using ECom.Models;
+using EComWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,17 +23,7 @@ public class UserRolesController : Controller
     // GET
     public async Task<IActionResult> Index(int userId)
     {
-        var viewModel = new UserRolesViewMode();
-        viewModel.RoleNames = new List<string>();
-        var user = await _userManager.FindByIdAsync(userId.ToString());
-        viewModel.UserId = userId;
-        viewModel.Username = user.UserName;
-        var roleOfUser = await _userManager.GetRolesAsync(user);
-        for (int i = 0; i < _roleManager.Roles.Count(); i++)
-        {
-            viewModel.RoleNames.Add(_roleManager.Roles.ToList()[i].Name);
-            if (roleOfUser[0] == viewModel.RoleNames[i]) viewModel.SelectedRole = i;
-        }
+        var viewModel = new UserRolesViewMode(userId);
         return View(viewModel);
     }
     //POST
@@ -42,10 +33,10 @@ public class UserRolesController : Controller
     {
         if (!ModelState.IsValid) return BadRequest();
         var user = await _userManager.FindByIdAsync(viewMode.UserId.ToString());
-        for (int i = 0; i < viewMode.RoleNames.Count; i++)
+        for (int i = 0; i < viewMode.Roles.Count; i++)
         {
-            if (viewMode.SelectedRole == i) await _userManager.AddToRoleAsync(user, viewMode.RoleNames[i]);
-            else await _userManager.RemoveFromRoleAsync(user, viewMode.RoleNames[i]);
+            if (viewMode.Roles[i].Selected == true) await _userManager.AddToRoleAsync(user, viewMode.Roles[i].Text);
+            else await _userManager.RemoveFromRoleAsync(user, viewMode.Roles[i].Text);
         }
         return RedirectToAction("Index","User");
     }

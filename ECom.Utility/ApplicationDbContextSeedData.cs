@@ -27,8 +27,8 @@ public class ApplicationDbContextSeedData
             context.SaveChanges();
         }
 
-        if (!context.UserRoles.Any(x => 
-                x.RoleId == context.Roles.FirstOrDefault(r => r.Name == StaticDetail.RoleAdmin).Id))
+        if (!Queryable.Any(context.UserRoles, x => 
+                x.RoleId == Queryable.FirstOrDefault(context.Roles, r => r.Name == StaticDetail.RoleAdmin).Id))
         {
             
             var user= new ApplicationUser

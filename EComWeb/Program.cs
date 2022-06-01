@@ -1,4 +1,5 @@
 using System.Globalization;
+using ECom.DataAccess;
 using ECom.DataAccess.Data;
 using ECom.Models;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,13 @@ using Microsoft.AspNetCore.Localization;
 using NuGet.Common;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseDefaultServiceProvider(options =>
+{
+    options.ValidateScopes = false;
+    options.ValidateOnBuild = false;
+});
+
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
