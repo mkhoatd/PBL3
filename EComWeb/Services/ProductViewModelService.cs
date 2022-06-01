@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
+#nullable disable
 namespace EComWeb.Services;
 
 public class ProductViewModelService:IProductViewModelService
@@ -27,7 +28,9 @@ public class ProductViewModelService:IProductViewModelService
                 (!manufactureId.HasValue || p.ManufactureId == manufactureId) &&
                 (!categoryId.HasValue || p.CategoryId == categoryId))
             .Skip(itemsPage * pageIndex).Take(itemsPage).ToListAsync();
-        var totalItem = itemOnPage.Count();
+        var totalItem = _context.Products
+            .Count(p => (!manufactureId.HasValue || p.ManufactureId == manufactureId) &&
+                        (!categoryId.HasValue || p.CategoryId == categoryId));
         var vm = new ProductIndexViewModel()
         {
             ProductItems = itemOnPage.Select(p => new ProductItemViewModel()
@@ -45,10 +48,14 @@ public class ProductViewModelService:IProductViewModelService
             {
                 ActualPage = pageIndex,
                 ItemsPerPage = itemOnPage.Count,
-                TotalItems = totalItem
+                TotalItems = totalItem,
+                TotalPages = int.Parse(Math.Ceiling(((decimal)totalItem/itemsPage)).ToString())
             }
         };
-        return null;
+        vm.PaginationInfo.Next=(vm.PaginationInfo.ActualPage==vm.PaginationInfo.TotalPages-1)?"is-disabled":"";
+        vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
+
+        return vm;
     }
 
     public async Task<IEnumerable<SelectListItem>> GetManufacturesAsync()

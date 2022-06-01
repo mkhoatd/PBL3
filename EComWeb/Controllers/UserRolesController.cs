@@ -1,4 +1,5 @@
 ﻿using ECom.Models;
+using EComWeb.Interfaces;
 using EComWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,35 +10,25 @@ namespace EComWeb.Controllers;
 [Authorize(Roles = "Admin")]
 public class UserRolesController : Controller
 {
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<ApplicationRole> _roleManager;
+    private readonly IUserRolesViewModelService _userRolesViewModelService;
 
-    public UserRolesController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-        RoleManager<ApplicationRole> roleManager)
+    public UserRolesController(IUserRolesViewModelService userRolesViewModelService)
     {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _roleManager = roleManager;
+        _userRolesViewModelService = userRolesViewModelService;
     }
     // GET
     public async Task<IActionResult> Index(int userId)
     {
-        var viewModel = new UserRolesViewMode(userId);
+        var viewModel = await _userRolesViewModelService.GetUserRolesViewModelAsync(userId);
         return View(viewModel);
     }
     //POST
     [ValidateAntiForgeryToken]
     [HttpPost]
-    public async Task<IActionResult> Index(UserRolesViewMode viewMode)
+    public async Task<IActionResult> Index(UserRolesViewMode viewModel)
     {
         if (!ModelState.IsValid) return BadRequest();
-        var user = await _userManager.FindByIdAsync(viewMode.UserId.ToString());
-        for (int i = 0; i < viewMode.Roles.Count; i++)
-        {
-            if (viewMode.Roles[i].Selected == true) await _userManager.AddToRoleAsync(user, viewMode.Roles[i].Text);
-            else await _userManager.RemoveFromRoleAsync(user, viewMode.Roles[i].Text);
-        }
+        await _userRolesViewModelService.UpdateUserRolesAsync(viewModel);
         return RedirectToAction("Index","User");
     }
 }

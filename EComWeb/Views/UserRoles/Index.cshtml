@@ -11,9 +11,7 @@
         <form asp-controller="UserRoles" method="post" asp-action="Index" asp-route-id="@Model.UserId" class="d-inline">
             <input asp-for="@Model.UserId" type="hidden" />
             <input asp-for="@Model.Username" type="hidden"/>
-            <select asp-for="@Model.Roles">
-                <option disabled selected>--Select Category--</option>
-            </select>
+            <select asp-for="@Model.CurrentRole" asp-items="@Model.Roles"></select>
             <div class="col-sm-12" style=" padding: 20px 20px 0px 0px">
                 <button type="submit" id="save" class="btn bg-primary">
                     <i class="fa fa-check"></i>

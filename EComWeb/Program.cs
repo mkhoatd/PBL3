@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using ECom.Utility;
+using EComWeb.Interfaces;
+using EComWeb.Services;
+using EComWeb.ViewModels;
 using Microsoft.AspNetCore.Localization;
 using NuGet.Common;
 
@@ -35,6 +38,8 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
 // Add services to the container.;
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IProductViewModelService, ProductViewModelService>();
+builder.Services.AddScoped<IUserRolesViewModelService, UserRolesViewModelService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(options =>
 {
