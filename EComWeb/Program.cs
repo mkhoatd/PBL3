@@ -105,7 +105,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller}/{action}/{id?}");
 app.MapRazorPages();
 
 // app.UseRequestLocalization(new RequestLocalizationOptions()

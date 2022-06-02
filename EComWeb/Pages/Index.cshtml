@@ -1,0 +1,25 @@
+﻿@page
+@model EComWeb.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Product";
+}
+
+<section class="esh-catalog-hero">
+    <div class="container">
+        
+    </div>
+</section>
+<section class="esh-catalog-filters">
+    <div class="container">
+        <form method="get">
+            <label class="esh-catalog-label" data-title="Manufacture">
+                <select asp-for="@Model.ProductIndexViewModel.ManufactureFilterApplied" asp-items="@Model.ProductIndexViewModel.Manufactures"></select>
+            </label>
+            <select asp-for="@Model.ProductIndexViewModel.ManufactureFilterApplied" asp-items="@Model.ProductIndexViewModel.Manufactures"></select>
+            <label asp-for="@Model.ProductIndexViewModel.CategoryFilterApplied"></label>
+            <select asp-for="@Model.ProductIndexViewModel.CategoryFilterApplied" asp-items="@Model.ProductIndexViewModel.Categories"></select>
+            
+        </form>
+    </div>
+</section>
