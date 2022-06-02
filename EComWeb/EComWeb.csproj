@@ -25,7 +25,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
@@ -78,16 +78,16 @@
     <_ContentIncludedByDefault Remove="Views\Manufacture\Details.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Manufacture\Edit.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Manufacture\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Products\Create.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Products\Delete.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Products\Details.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Products\Edit.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Products\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Specifications\Create.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Specifications\Delete.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Specifications\Details.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Specifications\Edit.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Specifications\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Products\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Products\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Products\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Products\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Products\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Specifications\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Specifications\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Specifications\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Specifications\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Management\Views\Specifications\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -166,14 +166,16 @@
     <UpToDateCheckInput Remove="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
     <UpToDateCheckInput Remove="Areas\Identity\Pages\_ViewImports.cshtml" />
     <UpToDateCheckInput Remove="Areas\Identity\Pages\_ViewStart.cshtml" />
-    <UpToDateCheckInput Remove="Views\Specifications\Create.cshtml" />
-    <UpToDateCheckInput Remove="Views\Specifications\Delete.cshtml" />
-    <UpToDateCheckInput Remove="Views\Specifications\Details.cshtml" />
-    <UpToDateCheckInput Remove="Views\Specifications\Edit.cshtml" />
-    <UpToDateCheckInput Remove="Views\Specifications\Index.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Management\Views\Specifications\Create.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Management\Views\Specifications\Delete.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Management\Views\Specifications\Details.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Management\Views\Specifications\Edit.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Management\Views\Specifications\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Customer\Controllers\" />
+    <Folder Include="Areas\Customer\Views\" />
     <Folder Include="wwwroot\ImagesUploaded" />
   </ItemGroup>
 

@@ -4,7 +4,6 @@ using EComWeb.ViewModels;
 
 namespace EComWeb.Pages;
 
-
 public class IndexModel : PageModel
 {
     private readonly IProductViewModelService _productViewModelService;

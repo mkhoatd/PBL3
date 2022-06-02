@@ -9,9 +9,10 @@ using ECom.DataAccess.Data;
 using ECom.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace EComWeb.Controllers
+namespace EComWeb.Areas.Management.Controllers
 {
     [Authorize(Roles = "Admin")]
+    [Area("Management")]
     public class ManufacturesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -90,7 +91,7 @@ namespace EComWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name")] Manufacture manufacture)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Manufacture manufacture)
         {
             if (id != manufacture.Id)
             {
