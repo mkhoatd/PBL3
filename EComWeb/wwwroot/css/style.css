@@ -194,8 +194,18 @@ img.cangiua {display: block; margin-left: auto; margin-right: auto;}
 	border: none;
 }
 
-/* Preloder */
+.w-100 btn btn-lg btn-primary {
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: 800;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 13px 30px 12px;
+	background: #9f0457;
+	border: none;
+}
 
+/* Preloder */
 #preloder {
 	position: fixed;
 	width: 100%;
@@ -2125,6 +2135,11 @@ img.cangiua {display: block; margin-left: auto; margin-right: auto;}
 .checkout__input {
 	margin-bottom: 24px;
 }
+
+	.checkout__input button {
+		color: #1c1c1c;
+		margin-bottom: 20px;
+	}
 
 .checkout__input p {
 	color: #1c1c1c;
