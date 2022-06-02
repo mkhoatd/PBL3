@@ -71,9 +71,9 @@
                             <span>Quản lý tài khoản</span>
                         </div>
                         <ul>
-                            <li><a href="#">Thông tin cá nhân</a></li>
-                            <li><a href="#">Tài khoản</a></li>
-                            <li><a href="#">Mật khẩu</a></li>
+                            <li><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index" > Thông tin cá nhân</a></li>
+                            <li><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Tài khoản</a></li>
+                            <li><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Mật khẩu</a></li>
                         </ul>
                     </div>
                 </div>
