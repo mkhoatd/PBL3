@@ -9,10 +9,10 @@ using ECom.DataAccess.Data;
 using ECom.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace EComWeb.Controllers
+namespace EComWeb.Areas.Management.Controllers
 {
     [Authorize(Roles = "Admin")]
-
+    [Area("Management")]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -73,7 +73,7 @@ namespace EComWeb.Controllers
                 string fileName = Path.GetRandomFileName();
                 string fileExtension = Path.GetExtension(product.Image.FileName);
                 string imageFileName = fileName + fileExtension;
-                string imageUrl = Path.Combine("/images", imageFileName);
+                string imageUrl = Path.Combine("/img/featured", imageFileName);
                 using (var fileStream = new FileStream(imageUrl, FileMode.Create))
                 {
                     await product.Image.CopyToAsync(fileStream);
@@ -112,7 +112,7 @@ namespace EComWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,Image,IsDeleted")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,Image,IsDeleted")] Product product)
         {
             if (id != product.Id)
             {

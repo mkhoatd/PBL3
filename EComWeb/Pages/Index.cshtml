@@ -16,10 +16,16 @@
             <label class="esh-catalog-label" data-title="Manufacture">
                 <select asp-for="@Model.ProductIndexViewModel.ManufactureFilterApplied" asp-items="@Model.ProductIndexViewModel.Manufactures"></select>
             </label>
-            <select asp-for="@Model.ProductIndexViewModel.ManufactureFilterApplied" asp-items="@Model.ProductIndexViewModel.Manufactures"></select>
-            <label asp-for="@Model.ProductIndexViewModel.CategoryFilterApplied"></label>
-            <select asp-for="@Model.ProductIndexViewModel.CategoryFilterApplied" asp-items="@Model.ProductIndexViewModel.Categories"></select>
-            
+            <label class="esh-catalog-label" data-title="Category">
+                <select asp-for="@Model.ProductIndexViewModel.CategoryFilterApplied" asp-items="@Model.ProductIndexViewModel.Categories" class="esh-catalog-filter"></select>
+            </label>                                                                                                                                                                                                                                         el> 
+            <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
         </form>
     </div>
 </section>
+<div class="container">
+@*    @if(Model.ProductIndexViewModel.ProductItems.Any())
+    {
+        <partial name="_pagination"></partial>
+    }*@
+</div>

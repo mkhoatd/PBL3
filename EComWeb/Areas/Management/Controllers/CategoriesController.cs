@@ -9,9 +9,10 @@ using ECom.DataAccess.Data;
 using ECom.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace EComWeb.Controllers
+namespace EComWeb.Areas.Management.Controllers
 {
     [Authorize(Roles = "Admin")]
+    [Area("Management")]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
