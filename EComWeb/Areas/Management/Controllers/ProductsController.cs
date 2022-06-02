@@ -73,7 +73,7 @@ namespace EComWeb.Areas.Management.Controllers
                 string fileName = Path.GetRandomFileName();
                 string fileExtension = Path.GetExtension(product.Image.FileName);
                 string imageFileName = fileName + fileExtension;
-                string imageUrl = Path.Combine("/images", imageFileName);
+                string imageUrl = Path.Combine("/img/featured", imageFileName);
                 using (var fileStream = new FileStream(imageUrl, FileMode.Create))
                 {
                     await product.Image.CopyToAsync(fileStream);
