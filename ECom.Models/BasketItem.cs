@@ -8,23 +8,17 @@ namespace ECom.Models
         public int Id { get; set; }
         public int ProductId { get; set; }
         public Product Product {get; set;}
-        public decimal Price { get; set; }
+        public decimal UnitPrice { get; set; }
         public int Quantity {get; set;}
         public int BasketId {get; set;}
         public Basket? Basket { get; set; }
-        public void UpdatePrice()
-        {
-            Price=Convert.ToDecimal(Product.Price*Quantity);   
-        }
         public void AddUnits(int quantity)
         {
             Quantity+=quantity;
-            UpdatePrice();
         }
         public void SetQuantity(int quantity)
         {
             Quantity=quantity;
-            UpdatePrice();
         }
 
     }

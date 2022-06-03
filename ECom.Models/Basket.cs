@@ -18,7 +18,7 @@ namespace ECom.Models
                 Items.Add(new BasketItem()
                 {
                     ProductId=productItemId,
-                    Price=unitPrice,
+                    UnitPrice= unitPrice,
                     Quantity = quantity
                 });
                 return;
