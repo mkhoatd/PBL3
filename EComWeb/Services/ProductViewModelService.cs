@@ -21,16 +21,15 @@ public class ProductViewModelService:IProductViewModelService
         _logger = loggerFactory.CreateLogger<ProductViewModelService>();
         _context = context;
     }
-    public async Task<ProductIndexViewModel> GetProductItemsAsync(int pageIndex, int itemsPage, int? manufactureId, int? categoryId)
+    public async Task<ProductIndexViewModel> GetProductItemsAsync(int pageIndex, int itemsPage, string? name, int? manufactureId, int? categoryId)
     {
-        _logger.LogInformation("GetProductItems called.");
-        var itemOnPage = await _context.Products.Where(p =>
-                (!manufactureId.HasValue || p.ManufactureId == manufactureId) &&
-                (!categoryId.HasValue || p.CategoryId == categoryId))
+        _logger.LogInformation("GetProductItems called");
+        var filteredQuery = _context.Products.Where(p =>
+            (!manufactureId.HasValue || p.ManufactureId == manufactureId) &&
+            (!categoryId.HasValue || p.CategoryId == categoryId) && (String.IsNullOrEmpty(name) || p.Name == name));
+        var itemOnPage = await filteredQuery
             .Skip(itemsPage * pageIndex).Take(itemsPage).ToListAsync();
-        var totalItem = _context.Products
-            .Count(p => (!manufactureId.HasValue || p.ManufactureId == manufactureId) &&
-                        (!categoryId.HasValue || p.CategoryId == categoryId));
+        var totalItem = await filteredQuery.CountAsync();
         var vm = new ProductIndexViewModel()
         {
             ProductItems = itemOnPage.Select(p => new ProductItemViewModel()
@@ -38,10 +37,11 @@ public class ProductViewModelService:IProductViewModelService
                 Id = p.Id,
                 Name = p.Name,
                 ImageUrl = p.ImageUrl,
-                Price = p.Price
+                Price = Decimal.ToInt32(p.Price*(1-p.Discount))
             }).ToList(),
             Manufactures = (await GetManufacturesAsync()).ToList(),
             Categories = (await GetCategoryAsync()).ToList(),
+            NameFilterApplied = name ?? "",
             ManufactureFilterApplied = manufactureId ?? 0,
             CategoryFilterApplied = categoryId ?? 0,
             PaginationInfo = new PaginationInfoViewModel()

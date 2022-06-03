@@ -176,7 +176,7 @@
   <ItemGroup>
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
-    <Folder Include="wwwroot\ImagesUploaded" />
+    <Folder Include="wwwroot\img\featured\" />
   </ItemGroup>
 
 </Project>

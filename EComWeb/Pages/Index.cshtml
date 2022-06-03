@@ -13,19 +13,38 @@
 <section class="esh-catalog-filters">
     <div class="container">
         <form method="get">
+            <label class="esh-catalog-label" data-title="Name">
+                <input asp-for="@Model.ProductIndexViewModel.NameFilterApplied" class="esh-catalog-filter"></input>
+            </label>
             <label class="esh-catalog-label" data-title="Manufacture">
-                <select asp-for="@Model.ProductIndexViewModel.ManufactureFilterApplied" asp-items="@Model.ProductIndexViewModel.Manufactures"></select>
+                <select asp-for="@Model.ProductIndexViewModel.ManufactureFilterApplied" asp-items="@Model.ProductIndexViewModel.Manufactures" class="esh-catalog-filter"></select>
             </label>
             <label class="esh-catalog-label" data-title="Category">
                 <select asp-for="@Model.ProductIndexViewModel.CategoryFilterApplied" asp-items="@Model.ProductIndexViewModel.Categories" class="esh-catalog-filter"></select>
-            </label>                                                                                                                                                                                                                                         el> 
-            <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+            </label> el>
+            <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg"/>
         </form>
     </div>
 </section>
 <div class="container">
-@*    @if(Model.ProductIndexViewModel.ProductItems.Any())
+    @if (Model.ProductIndexViewModel.ProductItems.Any())
     {
-        <partial name="_pagination"></partial>
-    }*@
+        <partial name="Shared/_pagination" for="ProductIndexViewModel.PaginationInfo"/>
+        
+        <div class="esh-catalog-items row">
+            @foreach (var productItem in Model.ProductIndexViewModel.ProductItems)
+            {
+                <div class="esh-catalog-items col-md-4">
+                    <partial name="Shared/_product" for="@productItem"/>
+                </div>
+            }
+        </div>
+        <partial name="Shared/_pagination" for="ProductIndexViewModel.PaginationInfo"/>
+    }
+    else
+    {
+        <div class="esh-catalog-items row">
+            THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+        </div>
+    }
 </div>
