@@ -28,7 +28,7 @@ public class IndexModel : PageModel
         _context = context;
     }
 
-    public BasketViewModel BasketViewModel { get; set; } = new BasketViewModel();
+    public BasketViewModel BasketViewModel { get; set; } = new();
 
     private async Task<int> GetUserIdAsync()
     {
@@ -63,11 +63,6 @@ public class IndexModel : PageModel
 
     public async Task OnPostUpdate(IEnumerable<BasketItemViewModel> items)
     {
-        if (!ModelState.IsValid)
-        {
-            return;
-        }
-
         var basketView = await _basketViewModelService.GetOrCreateBasketViewModelForUserAsync(await GetUserIdAsync());
         var updateModel = items.ToDictionary(b => b.Id.ToString(), b => b.Quantity);
         var basket = await _basketService.SetQuantitesAsync(basketView.Id, updateModel);
