@@ -2,14 +2,21 @@
 
 @{
     Layout = "/Areas/Management/Views/Shared/_LayoutAdmin.cshtml";
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index Specifications";
 }
+<section class="breadcrumb-section set-bg" data-setbg="/img/product/details/iphone13promax/apple-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>@ViewData["Title"]</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -64,3 +71,5 @@
 }
     </tbody>
 </table>
+<br/>
+<a asp-action="Create" class="w-100 btn btn-lg btn-primary">Create New</a>

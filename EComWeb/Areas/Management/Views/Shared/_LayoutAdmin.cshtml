@@ -89,12 +89,16 @@
                             <span>Admin</span>
                         </div>
                         <ul>
-                            <li><a href="/Management/User">Users</a></li>
+                            @*<li><a href="/Management/User">Users</a></li>
                             <li><a href="/Management/Manufactures">Manufactures</a></li>
                             <li><a href="/Management/Categories">Categories</a></li>
-                            <li><a href="/Management/Specifications">Specifications</a></li>
                             <li><a href="/Management/Products">Products</a></li>
-                            <li><a href="/Management/Specifications">Specifications</a></li>
+                            <li><a href="/Management/Specifications">Specifications</a></li>*@
+                            <li><a asp-area="Management" asp-controller="User">Users</a></li>
+                            <li><a asp-area="Management" asp-controller="Manufactures">Manufactures</a></li>
+                            <li><a asp-area="Management" asp-controller="Categories">Categories</a></li>
+                            <li><a asp-area="Management" asp-controller="Products">Products</a></li>
+                            <li><a asp-area="Management" asp-controller="Specifications">Specifications</a></li>
                         </ul>
                     </div>
                 </div>
