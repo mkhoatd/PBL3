@@ -26,7 +26,7 @@ public class ProductViewModelService:IProductViewModelService
         _logger.LogInformation("GetProductItems called");
         var filteredQuery = _context.Products.Where(p =>
             (!manufactureId.HasValue || p.ManufactureId == manufactureId) &&
-            (!categoryId.HasValue || p.CategoryId == categoryId) && (String.IsNullOrEmpty(name) || p.Name == name));
+            (!categoryId.HasValue || p.CategoryId == categoryId) && ( String.IsNullOrEmpty(name)|| p.Name.Contains(name)));
         var itemOnPage = await filteredQuery
             .Skip(itemsPage * pageIndex).Take(itemsPage).ToListAsync();
         var totalItem = await filteredQuery.CountAsync();
