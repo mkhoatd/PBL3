@@ -40,6 +40,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IProductViewModelService, ProductViewModelService>();
 builder.Services.AddScoped<IUserRolesViewModelService, UserRolesViewModelService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
+builder.Services.AddScoped<IBasketViewModelService, BasketViewModelService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(options =>
 {

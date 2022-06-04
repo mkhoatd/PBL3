@@ -9,29 +9,27 @@
         nextRouteData.Remove("pageId");
     nextRouteData.Add("pageId", (Model.ActualPage+1).ToString());
 }
-<div class="">
-    <div class="">
-        <article class="">
-            <nav>
-                <div class="">
-                    <a class="">
-                        <a class="@Model.Previous"
-                           id="Previous"
-                           asp-all-route-data="prevRouteData"
-                           aria-label="Previous">
-                            Previous
-                        </a>
+<div class="esh-pager">
+    <div class="container-fluid">
+        <article class="esh-pager-wrapper row">
+            <nav class="row justify-content-md-center">
+                <div class="col col-md-2">
+                    <a class="esh-pager-item-left esh-pager-item--navigable esh-pager-item @Model.Previous"
+                       id="Previous"
+                       asp-all-route-data="prevRouteData"
+                       aria-label="Previous">
+                        Previous
                     </a>
                 </div>
                 
-                <div class="col-md-8 col-xs-12">
-                    <span class="">
+                <div class="col col-md-auto">
+                    <span class="esh-pager-item">
                         Showing @Model.ItemsPerPage of @Model.TotalItems products - Page @(Model.ActualPage + 1) - @Model.TotalPages
                     </span>
                 </div>
 
-                <div class="col-md-2 col-xs-12">
-                    <a class="@Model.Next"
+                <div class="col col-md-2">
+                    <a class="esh-pager-item-right esh-pager-item--navigable esh-pager-item @Model.Next"
                        id="Next"
                        asp-all-route-data="nextRouteData"
                        aria-label="Next">

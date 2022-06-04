@@ -1,0 +1,19 @@
+﻿@page "{handler?}"
+@model EComWeb.Areas.Customer.Pages.Basket.IndexModel
+
+@{
+    ViewData["Title"] = "Basket";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    @if (Model.BasketViewModel.Items.Any())
+    {
+        <form method="post">
+            <article>
+                <br/>
+                
+            </article>
+        </form>
+    }
+</div>

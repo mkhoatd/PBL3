@@ -15,7 +15,7 @@ public class IndexModel : PageModel
 
     public ProductIndexViewModel ProductIndexViewModel { get; set; } = new ProductIndexViewModel();
 
-    public async Task OnGet(ProductIndexViewModel productIndexViewModel, int? pageId)
+    public async Task OnGetAsync(ProductIndexViewModel productIndexViewModel, int? pageId)
     {
         ProductIndexViewModel = await _productViewModelService.GetProductItemsAsync(pageId ?? 0,
             Constants.ITEMS_PER_PAGE, productIndexViewModel.NameFilterApplied, productIndexViewModel.ManufactureFilterApplied,
