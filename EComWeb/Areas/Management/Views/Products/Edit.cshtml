@@ -1,13 +1,25 @@
 @model ECom.Models.Product
 
 @{
-    ViewData["Title"] = "Edit";
+    Layout = "/Areas/Management/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Edit Product";
 }
 
-<h1>Edit</h1>
+<section class="breadcrumb-section set-bg" data-setbg="/img/product/details/iphone13promax/apple-banner.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>@ViewData["Title"]</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h4>Product</h4>
+<br/>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data">
