@@ -179,4 +179,10 @@
     <Folder Include="wwwroot\ImagesUploaded" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\img\blog\tao trang login.rar" />
+    <None Include="wwwroot\img\cart\applem1.webp" />
+    <None Include="wwwroot\img\cart\iphone13promax.webp" />
+  </ItemGroup>
+
 </Project>
