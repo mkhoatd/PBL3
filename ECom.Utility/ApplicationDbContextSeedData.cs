@@ -785,5 +785,27 @@ public class ApplicationDbContextSeedData
                     context.SaveChanges();
                 }
             }
+
+        if (!context.OrderStatuses.Any())
+        {
+            var lst = new List<OrderStatus>
+            {
+                new OrderStatus
+                {
+                    Name = "Đang giao"
+                },
+                new OrderStatus
+                {
+                    Name = "Đã giao"
+                },
+                new OrderStatus
+                {
+                    Name = "Đã hủy"
+                }
+            };
+            context.OrderStatuses.AddRange(lst);
+            context.SaveChanges();
         }
     }
+        
+}
