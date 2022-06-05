@@ -2,18 +2,21 @@
 @model EComWeb.Areas.Customer.Pages.Basket.CheckoutModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Checkout";
 }
 
-<!DOCTYPE html>
+<section class="esh-catalog-hero">
+    <div class="container">
+        <img class="esh-catalog-title" src="/images/main_banner_text.png"/>
+    </div>
+</section>
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+<div class="container">
+    <h1>Review</h1>
+    @if (Model.BasketViewModel.Items.Any())
+    {
+        <form asp-page="Checkout" method="post">
+            
+        </form>
+    }
 </div>
-</body>
-</html>

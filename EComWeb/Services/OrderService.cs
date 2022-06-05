@@ -33,7 +33,8 @@ public class OrderService : IOrderService
             {
                 ItemOrdered = itemOrdered,
                 UnitPrice = b.UnitPrice,
-                Units = b.Quantity
+                Units = b.Quantity,
+                ProductId = product.Id
             };
             return orderItem;
         }).ToList();
@@ -45,5 +46,6 @@ public class OrderService : IOrderService
             ShipToAddress = shippingAddress
         };
         _context.Orders.Add(order);
+        await _context.SaveChangesAsync();
     }
 }

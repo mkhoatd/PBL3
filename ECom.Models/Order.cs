@@ -8,7 +8,7 @@ namespace ECom.Models
         public int Id {get; set;}
         public int BuyerId {get; set;}
         public ApplicationUser? Buyer { get; set; }
-        public Address ShipToAddress {get; set;}
+        public Address? ShipToAddress {get; set;}
         public int OrderStatusId { get; set; }
         public OrderStatus? OrderStatus { get; set; }
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();

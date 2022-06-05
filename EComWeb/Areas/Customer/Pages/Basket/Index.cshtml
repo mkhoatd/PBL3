@@ -1,4 +1,4 @@
-﻿@page "{handler?}"
+﻿@page
 @using Microsoft.AspNetCore.Http.Features
 @model EComWeb.Areas.Customer.Pages.Basket.IndexModel
 
@@ -73,7 +73,8 @@
                                 asp-page-handler="Update">
                             Update
                         </button>
-                        <a asp-page="./Checkout" class="btn esh-basket-checkout">Checkout</a>
+                        @* <a asp-page="./Checkout" class="btn esh-basket-checkout">Checkout</a> *@
+                        <button class="btn esh-basket-checkout" formaction="./Basket/Checkout">Checkout</button>
                     </section>
                 </div>
             </div>
