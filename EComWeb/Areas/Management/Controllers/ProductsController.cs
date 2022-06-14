@@ -177,7 +177,6 @@ namespace EComWeb.Areas.Management.Controllers
             {
                 _context.Products.Remove(product);
             }
-            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

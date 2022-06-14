@@ -44,10 +44,7 @@ builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IBasketViewModelService, BasketViewModelService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages(options =>
-{
-    options.Conventions.AuthorizeAreaFolder("Management", "/");
-});
+builder.Services.AddRazorPages(options => options.Conventions.AuthorizeAreaFolder("Management", "/"));
 builder.Services.Configure<IdentityOptions>(options=>
 {
     //Password settings
