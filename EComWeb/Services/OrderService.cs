@@ -23,15 +23,15 @@ public class OrderService : IOrderService
         var items = basket.Items.Select(b =>
         {
             var product = products.First(p => p.Id == b.Id);
-            var itemOrdered = new ItemOrdered
+            var itemOrdered = new
             {
-                ItemId = product.Id,
                 ImageUrl = product.ImageUrl,
                 ProductName = product.Name
             };
             var orderItem = new OrderItem
             {
-                ItemOrdered = itemOrdered,
+                ProductName = itemOrdered.ProductName,
+                ImageUrl = itemOrdered.ImageUrl,
                 UnitPrice = b.UnitPrice,
                 Units = b.Quantity,
                 ProductId = product.Id

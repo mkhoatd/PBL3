@@ -4,5 +4,6 @@ namespace EComWeb.Interfaces;
 
 public interface IOrderViewModelService
 {
-    Task<OrderViewModel> GetOrderViewModelByUserIdAsync();
+    Task<List<OrderViewModel>> GetAllOrderAsync(int userId);
+    Task<OrderViewModel> GetOrderDetailAsync(int orderId);
 }

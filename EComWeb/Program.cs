@@ -43,6 +43,7 @@ builder.Services.AddScoped<IUserRolesViewModelService, UserRolesViewModelService
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IBasketViewModelService, BasketViewModelService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderViewModelService, OrderViewModelService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(options => options.Conventions.AuthorizeAreaFolder("Management", "/"));
 builder.Services.Configure<IdentityOptions>(options=>
