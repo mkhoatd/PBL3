@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECom.Models
 {
@@ -9,10 +10,14 @@ namespace ECom.Models
         public int BuyerId {get; set;}
         public ApplicationUser? Buyer { get; set; }
         public Address? ShipToAddress {get; set;}
-        public int OrderStatusId { get; set; }
-        public OrderStatus? OrderStatus { get; set; }
+        [NotMapped]
+        public OrderStatus?  CurrentOrderStatus
+        {
+            get => OrderStatuses.Last();
+            private set { }
+        }
+        public List<OrderStatus> OrderStatuses { get; set; }=new List<OrderStatus>();
         public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-
 
     }
 }

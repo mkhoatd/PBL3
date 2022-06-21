@@ -32,6 +32,13 @@ namespace ECom.DataAccess.Data
             modelBuilder.Entity<IdentityRoleClaim<Int32>>().ToTable("RoleClaim");
             //đổi tên bảng thành UserToken
             modelBuilder.Entity<IdentityUserToken<Int32>>().ToTable("UserToken");
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Specification)
+                .WithOne(s => s.Product)
+                .HasForeignKey<Specification>(s => s.ProductId);
+            modelBuilder.Entity<OrderStatus>()
+                .Property(os => os.Name)
+                .HasConversion<string>();
             // modelBuilder.Entity<Category>()
             //     .HasMany(c => c.Products)
             //     .WithOne(p => p.Category)
@@ -41,10 +48,6 @@ namespace ECom.DataAccess.Data
             //     .WithOne(p => p.Manufacture)
             //     .HasForeignKey(p => p.ManufactureId);
             //Quan hệ 1-1 Product và Specification
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.Specification)
-                .WithOne(s => s.Product)
-                .HasForeignKey<Specification>(s=>s.ProductId);
             // modelBuilder.Entity<Basket>()
             //     .HasMany(b => b.Items)
             //     .WithOne(i => i.Basket)

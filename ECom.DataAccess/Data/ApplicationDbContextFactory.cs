@@ -10,7 +10,6 @@ public class ApplicationDbContextFactory:IDesignTimeDbContextFactory<Application
     {
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         optionsBuilder.UseSqlServer("Server=.;Database=EComWeb;Trusted_Connection=True");
-
         return new ApplicationDbContext(optionsBuilder.Options);
 
     }

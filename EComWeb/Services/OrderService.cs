@@ -38,13 +38,18 @@ public class OrderService : IOrderService
             };
             return orderItem;
         }).ToList();
+        var currentOrderStatus = new OrderStatus
+        {
+            Name = OrderStatus.OrderStatusType.Shipping,
+            StartDate = DateTime.Now
+        };
         var order = new Order
         {
             BuyerId = basket.BuyerId,
             OrderItems = items,
-            OrderStatusId = await _context.OrderStatuses.Where(os=>os.Name=="Đang giao").Select(os=>os.Id).FirstOrDefaultAsync(),
             ShipToAddress = shippingAddress
         };
+        order.OrderStatuses.Add(currentOrderStatus);
         _context.Orders.Add(order);
         await _context.SaveChangesAsync();
     }

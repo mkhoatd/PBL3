@@ -14,7 +14,7 @@ public class OrderViewModelService : IOrderViewModelService
     }
     public async Task<List<OrderViewModel>> GetAllOrderAsync(int userId)
     {
-        var orders=await _context.Orders.Where(o=>o.BuyerId == userId).Include(o=>o.OrderStatus).ToListAsync();
+        var orders=await _context.Orders.Where(o=>o.BuyerId == userId).Include(o=>o.OrderStatuses).ToListAsync();
         var results=new List<OrderViewModel>();
         foreach(var order in orders)
         {

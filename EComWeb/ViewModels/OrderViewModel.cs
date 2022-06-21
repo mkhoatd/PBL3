@@ -7,7 +7,7 @@ public class OrderViewModel
     public OrderViewModel(Order order)
     {
         Id=order.Id;
-        OrderStatus = order.OrderStatus.Name;
+        OrderStatuses = order.OrderStatuses;
         decimal total = 0;
         foreach(var item in order.OrderItems)
         {
@@ -25,7 +25,12 @@ public class OrderViewModel
         }).ToList();
     }
     public int Id { get; set; }
-    public string OrderStatus { get; set; }
+    public List<OrderStatus> OrderStatuses { get; set; }
+    public OrderStatus CurrentOrderStatus
+    {
+        get => OrderStatuses.Last();
+        private set { }
+    }
     public decimal TotalPrice { get; set; }
     public Address ShippingAddress { get; set; }
     public List<OrderItemViewModel> OrderItems { get; set; } = new List<OrderItemViewModel>();
