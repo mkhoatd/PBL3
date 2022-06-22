@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EComWeb.ViewModels
 {
-    
     public class ProductItemViewModel
     {
         public int Id { get; set; }

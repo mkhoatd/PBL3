@@ -29,7 +29,7 @@
 <div class="container">
     @if (Model.ProductIndexViewModel.ProductItems.Any())
     {
-        <partial name="Shared/_pagination" for="ProductIndexViewModel.PaginationInfo"/>
+        <partial name="Shared/_pagination" for="@Model.ProductIndexViewModel.PaginationInfo"/>
         
         <div class="esh-catalog-items row">
             @foreach (var productItem in Model.ProductIndexViewModel.ProductItems)
@@ -39,7 +39,7 @@
                 </div>
             }
         </div>
-        <partial name="Shared/_pagination" for="ProductIndexViewModel.PaginationInfo"/>
+        <partial name="Shared/_pagination" for="@Model.ProductIndexViewModel.PaginationInfo"/>
     }
     else
     {

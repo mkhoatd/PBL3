@@ -1,5 +1,3 @@
-using System.Globalization;
-using ECom.DataAccess;
 using ECom.DataAccess.Data;
 using ECom.Models;
 using Microsoft.AspNetCore.Identity;
@@ -8,9 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using ECom.Utility;
 using EComWeb.Interfaces;
 using EComWeb.Services;
-using EComWeb.ViewModels;
-using Microsoft.AspNetCore.Localization;
-using NuGet.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,8 +70,6 @@ builder.Services.ConfigureApplicationCookie(options=>
 
 
 var app = builder.Build();
-
-StaticDetail.ServiceProvider = app.Services;
 
 using (var scope = app.Services.CreateScope())
 {
