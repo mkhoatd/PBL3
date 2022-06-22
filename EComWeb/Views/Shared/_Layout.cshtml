@@ -44,6 +44,10 @@
                         {
                             <a class="nav-link text-dark" asp-area="Customer" asp-page="/Basket/Index">Basket</a>
                         }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="nav-link text-dark" asp-area="Customer" asp-page="/Orders/Index">Your Orders</a>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

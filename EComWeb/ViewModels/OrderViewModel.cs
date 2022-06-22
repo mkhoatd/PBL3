@@ -1,4 +1,5 @@
 ﻿using ECom.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EComWeb.ViewModels;
 
@@ -7,6 +8,7 @@ public class OrderViewModel
     public OrderViewModel(Order order)
     {
         Id=order.Id;
+        BuyerId = order.BuyerId;
         OrderStatuses = order.OrderStatuses;
         decimal total = 0;
         foreach(var item in order.OrderItems)
@@ -25,7 +27,24 @@ public class OrderViewModel
         }).ToList();
     }
     public int Id { get; set; }
+    public int BuyerId { get; set; }
     public List<OrderStatus> OrderStatuses { get; set; }
+
+    public List<SelectListItem> OrderStatusSelectListItems
+    {
+        get
+        {
+            return new List<String> {"Shipping", "Completed", "Cancelled", "Returned"}
+                .Select(s => new SelectListItem
+                {
+                    Value = s,
+                    Text = s,
+                    Selected = OrderStatuses.Last().Name.ToString() == s ? true : false
+                }).ToList();
+        }
+        private set{}
+    }
+        
     public OrderStatus CurrentOrderStatus
     {
         get => OrderStatuses.Last();

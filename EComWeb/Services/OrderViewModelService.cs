@@ -14,7 +14,7 @@ public class OrderViewModelService : IOrderViewModelService
     }
     public async Task<List<OrderViewModel>> GetAllOrderAsync(int userId)
     {
-        var orders=await _context.Orders.Where(o=>o.BuyerId == userId).Include(o=>o.OrderStatuses).ToListAsync();
+        var orders=await _context.Orders.Where(o=>o.BuyerId == userId).Include(o=>o.OrderStatuses).Include(o=>o.OrderItems).ToListAsync();
         var results=new List<OrderViewModel>();
         foreach(var order in orders)
         {
@@ -25,7 +25,8 @@ public class OrderViewModelService : IOrderViewModelService
 
     public async Task<OrderViewModel> GetOrderDetailAsync(int orderId)
     {
-        var order = await _context.Orders.FindAsync(orderId);
+        var order = await _context.Orders.Include(o => o.OrderStatuses).Include(o => o.OrderItems)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
         return new OrderViewModel(order);
 
     }

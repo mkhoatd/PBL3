@@ -8,11 +8,11 @@ namespace EComWeb.Areas.Management.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Management")]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(UserManager<ApplicationUser> userManager)
+        public UsersController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
@@ -23,5 +23,7 @@ namespace EComWeb.Areas.Management.Controllers
             var allUserExceptCurrentUser = await _userManager.Users.Where(a => a.Id != currentUser.Id).ToListAsync();
             return View(allUserExceptCurrentUser);
         }
+       
+        
     }
 }

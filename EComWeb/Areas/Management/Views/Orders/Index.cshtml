@@ -1,0 +1,42 @@
+﻿@model List<ECom.Models.ApplicationUser>
+@{
+    ViewData["Title"]="Orders";
+}
+<h1>@ViewData["Title"]</h1>
+<br/>
+<table class="table table-striped" id="userTable">
+    <thead>
+    <tr>
+        <th>User</th><th>Email</th><th style="width:10%">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-sm">
+                        <a>
+                            @user.UserName
+                        </a>
+                        <br/>
+                        <small>
+                            @user.Id
+                        </small>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a>
+                    @user.Email
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Orders" asp-action="GetUserOrders" asp-route-userId="@user.Id" class="dropdown-item">Manage Orders</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+

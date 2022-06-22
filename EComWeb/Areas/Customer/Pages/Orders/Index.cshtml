@@ -1,0 +1,32 @@
+﻿@page
+@using ECom.Models
+@model EComWeb.Areas.Customer.Pages.Orders.IndexModel
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+@if(Model.AllUserOrders.Count==0)
+{
+    <span>You has no order</span>
+}
+else
+{
+    <table>
+    <tr>
+        <th>Order Id</th>
+        <th>Total Price</th>
+        <th>Order Status</th>
+        <th>Detail</th>
+    </tr>
+    @foreach (var order in Model.AllUserOrders)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.TotalPrice</td>
+            <td>@order.CurrentOrderStatus.Name.ToString()</td>
+            <td><a asp-page="./Detail" asp-route-orderId="@order.Id" >Detail</a></td>
+        </tr>
+    }
+</table>
+}

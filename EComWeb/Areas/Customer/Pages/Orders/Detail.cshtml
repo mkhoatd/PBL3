@@ -1,0 +1,65 @@
+﻿@page
+@model EComWeb.Areas.Customer.Pages.Orders.DetailModel
+
+@{
+    ViewData["Title"] = "Order Detail";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <h2>Products</h2>
+    <table>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Units
+            </th>
+            <th>
+                Total item price
+            </th>
+        </tr>
+        @foreach (var orderItem in Model.Order.OrderItems)
+        {
+            <tr>
+                <td>
+                    @orderItem.ProductName
+                </td>
+                <td>
+                    <img src="@orderItem.ImageUrl" alt="@orderItem.ImageUrl"/>
+                </td>
+                <td>
+                    @orderItem.UnitPrice
+                </td>
+                <td>
+                    @orderItem.Units
+                </td>
+                <td>
+                    @orderItem.TotalPrice
+                </td>
+            </tr>
+        }
+    </table>
+    Total price: @Model.Order.TotalPrice
+</p>
+<p>
+    <h2>Order status</h2>
+    @foreach (var orderStatus in Model.Order.OrderStatuses)
+    {
+        <span>@orderStatus.Name.ToString()</span>
+        <br/>
+        <span>Start date: @orderStatus.StartDate</span>
+        <br/>
+        @if (@orderStatus.EndDate != null)
+        {
+            <span>End date: @orderStatus.EndDate</span>
+        }
+    }
+</p>

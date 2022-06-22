@@ -2,6 +2,8 @@
 using ECom.Models;
 using EComWeb.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
 
 namespace EComWeb.Services;
 
@@ -52,5 +54,20 @@ public class OrderService : IOrderService
         order.OrderStatuses.Add(currentOrderStatus);
         _context.Orders.Add(order);
         await _context.SaveChangesAsync();
+    }
+    public async Task UpdateOrderStatusAsync(int orderId, string orderStatus)
+    {
+        if (!Enum.IsDefined(typeof(OrderStatus.OrderStatusType), orderStatus))
+        {
+            throw new ArgumentException(String.Format("Wrong OrderStatus: {orderStatus}"));
+        }
+        var order = await _context.Orders.Include(o=>o.OrderStatuses).FirstOrDefaultAsync(o=>o.Id==orderId);
+        var currentDate = DateTime.Now;
+        order.OrderStatuses.Last().EndDate=currentDate;
+        order.OrderStatuses.Add(new ECom.Models.OrderStatus
+        {
+            Name = (OrderStatus.OrderStatusType)Enum.Parse<OrderStatus.OrderStatusType>(orderStatus),
+            StartDate = currentDate
+        });
     }
 }
