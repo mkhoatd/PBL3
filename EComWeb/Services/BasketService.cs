@@ -25,6 +25,7 @@ public class BasketService : IBasketService
             {
                 BuyerId = buyerId
             };
+            await _context.Baskets.AddAsync(basket);
         }
         var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == productItemId);
         var unitPrice = product.Price * (1 - product.Discount);
