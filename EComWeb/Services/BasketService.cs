@@ -10,10 +10,12 @@ namespace EComWeb.Services;
 
 public class BasketService : IBasketService
 {
+    private readonly ILogger<BasketService> _logger;
     private readonly ApplicationDbContext _context;
 
-    public BasketService(ApplicationDbContext context)
+    public BasketService(ApplicationDbContext context, ILoggerFactory loggerFactory)
     {
+        _logger = loggerFactory.CreateLogger<BasketService>();
         _context = context;
     }
     public async Task<Basket> AddItemToBasketAsync(int buyerId, int productItemId, int quantity)
@@ -36,13 +38,18 @@ public class BasketService : IBasketService
 
     public async Task<Basket> SetQuantitesAsync(int basketId, Dictionary<string, int> quantities)
     {
+        var lines = quantities.Select(kvp => kvp.Key + " " + kvp.Value.ToString());
+        _logger.LogWarning("quantities key value pair: "+String.Join('\n',lines));
         var basket = await _context.Baskets.Where(b => b.Id == basketId).Include(b => b.Items).FirstAsync();
         foreach (var item in basket.Items)
         {
             if (quantities.TryGetValue(item.Id.ToString(), out var quantity))
             {
+                _logger.LogWarning($"current BasketItem with Id {item.Id} has {item.Quantity} units");
                 item.SetQuantity(quantity);
             }
+            _logger.LogWarning($"After change: {item.Quantity}");
+            
         }
         basket.RemoveEmptyItems();
         await _context.SaveChangesAsync();

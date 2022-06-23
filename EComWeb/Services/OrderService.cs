@@ -9,37 +9,51 @@ namespace EComWeb.Services;
 
 public class OrderService : IOrderService
 {
+    private readonly ILogger<OrderService> _logger;
     private readonly ApplicationDbContext _context;
 
-    public OrderService(ApplicationDbContext context)
+    public OrderService(ApplicationDbContext context, ILoggerFactory loggerFactory)
     {
         _context = context;
+        _logger = loggerFactory.CreateLogger<OrderService>();
     }
     public async Task CreateOrderAsync(int basketId, Address shippingAddress)
     {
         var basket = await _context.Baskets.Include(b => b.Items).FirstOrDefaultAsync(b => b.Id == basketId);
-
-        var productIds = basket.Items.Select(i => i.Id);
+        _logger.LogWarning($"Get basket with Id {basket.Id}");
+        basket.Items.ForEach(i=>_logger.LogWarning($"BasketItem Id {i.Id} with productId {i.ProductId} from basketId {i.BasketId}"));
+        var productIds = basket.Items.Select(i => i.ProductId);
         var products = await _context.Products.Where(p => productIds.Contains(p.Id)).ToListAsync();
-
-        var items = basket.Items.Select(b =>
+        products.ForEach(p=>_logger.LogWarning($"Get product with Id {p.Id} from BasketItem"));
+        // var items = basket.Items.Select(b =>
+        // {
+        //     var product = products.First(p => p.Id == b.Id);
+        //     var orderItem = new OrderItem
+        //     {
+        //         ProductName = product.Name,
+        //         ImageUrl = product.ImageUrl,
+        //         UnitPrice = b.UnitPrice,
+        //         Units = b.Quantity,
+        //         ProductId = product.Id
+        //     };
+        //     _logger.LogWarning($"Created orderItem with ProductId: {orderItem.ProductId}, ProductName: {orderItem.ProductName}");
+        //     return orderItem;
+        // }).ToList();
+        var items = new List<OrderItem>();
+        var basketItems = basket.Items.ToList();
+        foreach (var basketItem in basketItems)
         {
-            var product = products.First(p => p.Id == b.Id);
-            var itemOrdered = new
-            {
-                ImageUrl = product.ImageUrl,
-                ProductName = product.Name
-            };
+            var product = products.First(p => p.Id == basketItem.ProductId);
             var orderItem = new OrderItem
             {
-                ProductName = itemOrdered.ProductName,
-                ImageUrl = itemOrdered.ImageUrl,
-                UnitPrice = b.UnitPrice,
-                Units = b.Quantity,
-                ProductId = product.Id
+                ProductName = product.Name,
+                ImageUrl = product.ImageUrl,
+                UnitPrice = basketItem.UnitPrice, //Lấy price trong basket, vì price trong basket đã tính giảm giá
+                Units = basketItem.Quantity,
+                ProductId = basketItem.ProductId
             };
-            return orderItem;
-        }).ToList();
+            items.Add(orderItem);
+        }
         var currentOrderStatus = new OrderStatus
         {
             Name = OrderStatus.OrderStatusType.Shipping,
