@@ -52,6 +52,7 @@
     <h2>Order status</h2>
     @foreach (var orderStatus in Model.OrderStatuses)
     {
+        <br/>
         <span>@orderStatus.Name.ToString()</span>
         <br/>
         <span>Start date: @orderStatus.StartDate</span>

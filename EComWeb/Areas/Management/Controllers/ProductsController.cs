@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,19 +17,26 @@ namespace EComWeb.Areas.Management.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _hostEnvironment; 
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly ILogger<ProductsController> _logger;
 
-        public ProductsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
+        public ProductsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment,
+            ILoggerFactory loggerFactory)
         {
             _context = context;
             _hostEnvironment = hostEnvironment;
+            _logger = loggerFactory.CreateLogger<ProductsController>();
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string name="")
         {
-            var applicationDbContext = _context.Products.Include(p => p.Category).Include(p => p.Manufacture).Include(p=>p.Specification);
-            return View(await applicationDbContext.ToListAsync());
+            _logger.LogWarning("Index get called");
+            var result = _context.Products.Where(p=>String.IsNullOrEmpty(name)?true:p.Name.Contains(name))
+                .Include(p => p.Category)
+                .Include(p => p.Manufacture)
+                .Include(p=>p.Specification);
+            return View(await result.ToListAsync());
         }
 
         // GET: Products/Details/5
@@ -38,7 +46,7 @@ namespace EComWeb.Areas.Management.Controllers
             {
                 return NotFound();
             }
-
+            _logger.LogWarning($"Details get with id {id} called");
             var product = await _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Manufacture)
@@ -69,17 +77,9 @@ namespace EComWeb.Areas.Management.Controllers
         {
             if (ModelState.IsValid)
             {
-                string wwwRootPath = _hostEnvironment.WebRootPath;
-                string fileName = Path.GetRandomFileName();
-                string fileExtension = Path.GetExtension(product.Image.FileName);
-                string imageFileName = fileName + fileExtension;
-                string imageUrl = Path.Combine("/img/featured", imageFileName);
-                using (var fileStream = new FileStream(imageUrl, FileMode.Create))
-                {
-                    await product.Image.CopyToAsync(fileStream);
-                }
-
-                product.ImageUrl = imageUrl;
+                _logger.LogWarning("Create method called, Model state valid");
+                string webRootPath = _hostEnvironment.WebRootPath;
+                await product.SaveImageAsync(webRootPath);
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -102,17 +102,20 @@ namespace EComWeb.Areas.Management.Controllers
             {
                 return NotFound();
             }
+
+            product.LoadImage(_hostEnvironment.WebRootPath);
+            
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             ViewData["ManufactureId"] = new SelectList(_context.Manufactures, "Id", "Name", product.ManufactureId);
             return View(product);
         }
-
+        
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,Image,IsDeleted")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,IsDeleted")] Product product)
         {
             if (id != product.Id)
             {
@@ -122,6 +125,7 @@ namespace EComWeb.Areas.Management.Controllers
             {
                 try
                 {
+                    _logger.LogWarning("Edit method called, Model state valid");
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
@@ -142,7 +146,33 @@ namespace EComWeb.Areas.Management.Controllers
             ViewData["ManufactureId"] = new SelectList(_context.Manufactures, "Id", "Name", product.ManufactureId);
             return View(product);
         }
+        // GET
+        public async Task<IActionResult> EditImage(int id)
+        {
+            if (await _context.Products.FindAsync(id) ==null)
+            {
+                return NotFound();
+            }
+            return View(id);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditImage([Bind("id,image")]int id, IFormFile image)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product ==null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                string webRootPath = _hostEnvironment.WebRootPath;
+                await product.EditImageAsync(_hostEnvironment.WebRootPath, image);
+            }
+            return RedirectToAction("Edit", routeValues: $"{id}");
+        }
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -175,6 +205,7 @@ namespace EComWeb.Areas.Management.Controllers
             var product = await _context.Products.FindAsync(id);
             if (product != null)
             {
+                product.RemoveImage(_hostEnvironment.WebRootPath);
                 _context.Products.Remove(product);
             }
             await _context.SaveChangesAsync();
@@ -183,7 +214,7 @@ namespace EComWeb.Areas.Management.Controllers
 
         private bool ProductExists(int id)
         {
-          return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Products.Any()?true:false);
         }
     }
 }

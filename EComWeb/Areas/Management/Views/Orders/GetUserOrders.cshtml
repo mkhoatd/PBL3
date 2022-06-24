@@ -8,7 +8,7 @@
     <br />
     <text>Id: @order.Id</text>
     <form asp-action="UpdateOrderStatus" method="post">
-        <input type="hidden" name="orderId">
+        <input type="hidden" name="orderId" id="orderId" value="@order.Id">
         <select asp-items="@order.OrderStatusSelectListItems" name="statusName"></select>
         <input type="submit" value="Update" class="btn btn-primary" />
     </form>

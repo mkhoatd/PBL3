@@ -25,20 +25,6 @@ public class OrderService : IOrderService
         var productIds = basket.Items.Select(i => i.ProductId);
         var products = await _context.Products.Where(p => productIds.Contains(p.Id)).ToListAsync();
         products.ForEach(p=>_logger.LogWarning($"Get product with Id {p.Id} from BasketItem"));
-        // var items = basket.Items.Select(b =>
-        // {
-        //     var product = products.First(p => p.Id == b.Id);
-        //     var orderItem = new OrderItem
-        //     {
-        //         ProductName = product.Name,
-        //         ImageUrl = product.ImageUrl,
-        //         UnitPrice = b.UnitPrice,
-        //         Units = b.Quantity,
-        //         ProductId = product.Id
-        //     };
-        //     _logger.LogWarning($"Created orderItem with ProductId: {orderItem.ProductId}, ProductName: {orderItem.ProductName}");
-        //     return orderItem;
-        // }).ToList();
         var items = new List<OrderItem>();
         var basketItems = basket.Items.ToList();
         foreach (var basketItem in basketItems)
@@ -83,5 +69,6 @@ public class OrderService : IOrderService
             Name = (OrderStatus.OrderStatusType)Enum.Parse<OrderStatus.OrderStatusType>(orderStatus),
             StartDate = currentDate
         });
+        await _context.SaveChangesAsync();
     }
 }
