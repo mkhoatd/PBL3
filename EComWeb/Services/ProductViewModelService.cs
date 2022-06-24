@@ -33,13 +33,14 @@ public class ProductViewModelService:IProductViewModelService
         var totalItem = await filteredQuery.CountAsync();
         var vm = new ProductIndexViewModel()
         {
-            ProductItems = itemOnPage.Select(p => new ProductItemViewModel()
+            ProductItems = itemOnPage.ConvertAll(p => new ProductItemViewModel()
             {
                 Id = p.Id,
                 Name = p.Name,
                 ImageUrl = p.ImageUrl,
-                Price = Decimal.ToInt32(p.Price*(1-p.Discount))
-            }).ToList(),
+                Price=Decimal.ToInt32(p.Price),
+                DiscountPrice = Decimal.ToInt32(p.Price*(1-p.Discount))
+            }),
             Manufactures = (await GetManufacturesAsync()).ToList(),
             Categories = (await GetCategoryAsync()).ToList(),
             NameFilterApplied = name ?? "",
