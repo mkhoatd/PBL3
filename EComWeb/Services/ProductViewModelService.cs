@@ -1,5 +1,6 @@
 ﻿using ECom.DataAccess.Data;
 using ECom.Models;
+using EComWeb.ExtensionsMethod;
 using EComWeb.Interfaces;
 using EComWeb.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,7 +25,7 @@ public class ProductViewModelService:IProductViewModelService
     public async Task<ProductIndexViewModel> GetProductItemsAsync(int pageIndex, int itemsPage, string? name, int? manufactureId, int? categoryId)
     {
         _logger.LogInformation("GetProductItems called");
-        var filteredQuery = _context.Products.Where(p =>
+        var filteredQuery = _context.Products.GetAllAvailbleProduct().Where(p =>
             (!manufactureId.HasValue || p.ManufactureId == manufactureId) &&
             (!categoryId.HasValue || p.CategoryId == categoryId) && ( String.IsNullOrEmpty(name)|| p.Name.Contains(name)));
         var itemOnPage = await filteredQuery

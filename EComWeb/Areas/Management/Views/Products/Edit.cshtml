@@ -69,6 +69,7 @@
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
                 <img src="@Model.ImageUrl"/>
+                <input type="hidden" asp-for="ImageUrl"/>
                 <a class="btn btn-primary" asp-action="EditImage" asp-route-id="@Model.Id">Edit Image</a>
             </div>
             <div class="form-group form-check">

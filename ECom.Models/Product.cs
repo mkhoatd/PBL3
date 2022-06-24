@@ -28,67 +28,66 @@ namespace ECom.Models
         public List<BasketItem> BasketItems { get; set; } = new List<BasketItem>();
         public string? ImageUrl{ get; set; }
         [NotMapped]
-        [Required(ErrorMessage = "Must have image")]
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
         public bool IsDeleted { get; set; }
 
-        public async Task SaveImageAsync(string WebRootPath)
-        {
-            string fileName = System.Guid.NewGuid().ToString();
-            string fileExtension = Path.GetExtension(Image.FileName);
-            string imageFileName = fileName + fileExtension;
-            string imageUrl = Path.Combine("img/featured", imageFileName);
-            using (var fileStream = new FileStream(Path.Combine(WebRootPath,imageUrl), FileMode.Create))
-            {
-                await Image.CopyToAsync(fileStream);
-            }
-            ImageUrl = "/"+imageUrl;
-        }
-        public async Task SaveImageAsync(string WebRootPath, IFormFile file)
-        {
-            string fileName = System.Guid.NewGuid().ToString();
-            string fileExtension = Path.GetExtension(file.FileName);
-            string imageFileName = fileName + fileExtension;
-            string imageUrl = Path.Combine("img/featured", imageFileName);
-            using (var fileStream = new FileStream(Path.Combine(WebRootPath,imageUrl), FileMode.Create))
-            {
-                await file.CopyToAsync(fileStream);
-            }
-            ImageUrl = "/"+imageUrl;
-        }
-        public void LoadImage(string WebRootPath)
-        {
-            if (String.IsNullOrEmpty(ImageUrl)) throw new Exception("ImageUrl has not been initialized ");
-            string path = Path.Combine(WebRootPath, ImageUrl.Remove(0, 1));
-            if (!System.IO.File.Exists(path))
-            {
-                ImageUrl = "";
-            }
-            using(var stream=new FileStream(path,FileMode.Open))
-            {
-                Image = new FormFile(stream, 0, stream.Length,
-                    "attachment", Path.GetFileName(stream.Name));
-            }
-        }
-
-        public void RemoveImage(string WebRootPath)
-        {
-            if(System.IO.File.Exists(Path.Combine(WebRootPath,ImageUrl.Remove(0,1))))
-            {
-                System.IO.File.Delete(Path.Combine(WebRootPath,ImageUrl.Remove(0,1)));
-            }
-        }
-
-        public async Task EditImageAsync(string WebRootPath)
-        {
-            RemoveImage(WebRootPath);
-            await SaveImageAsync(WebRootPath);
-        }
-
-        public async Task EditImageAsync(string WebRootPath, IFormFile file)
-        {
-            RemoveImage(WebRootPath);
-            await SaveImageAsync(WebRootPath, file);
-        }
+        // public async Task SaveImageAsync(string WebRootPath)
+        // {
+        //     string fileName = System.Guid.NewGuid().ToString();
+        //     string fileExtension = Path.GetExtension(Image.FileName);
+        //     string imageFileName = fileName + fileExtension;
+        //     string imageUrl = Path.Combine("img/featured", imageFileName);
+        //     using (var fileStream = new FileStream(Path.Combine(WebRootPath,imageUrl), FileMode.Create))
+        //     {
+        //         await Image.CopyToAsync(fileStream);
+        //     }
+        //     ImageUrl = "/"+imageUrl;
+        // }
+        // public async Task SaveImageAsync(string WebRootPath, IFormFile file)
+        // {
+        //     string fileName = System.Guid.NewGuid().ToString();
+        //     string fileExtension = Path.GetExtension(file.FileName);
+        //     string imageFileName = fileName + fileExtension;
+        //     string imageUrl = Path.Combine("img/featured", imageFileName);
+        //     using (var fileStream = new FileStream(Path.Combine(WebRootPath,imageUrl), FileMode.Create))
+        //     {
+        //         await file.CopyToAsync(fileStream);
+        //     }
+        //     ImageUrl = "/"+imageUrl;
+        // }
+        // public void LoadImage(string WebRootPath)
+        // {
+        //     if (String.IsNullOrEmpty(ImageUrl)) throw new Exception("ImageUrl has not been initialized ");
+        //     string path = Path.Combine(WebRootPath, ImageUrl.Remove(0, 1));
+        //     if (!System.IO.File.Exists(path))
+        //     {
+        //         ImageUrl = "";
+        //     }
+        //     using(var stream=new FileStream(path,FileMode.Open))
+        //     {
+        //         Image = new FormFile(stream, 0, stream.Length,
+        //             "attachment", Path.GetFileName(stream.Name));
+        //     }
+        // }
+        //
+        // public void RemoveImage(string WebRootPath)
+        // {
+        //     if(System.IO.File.Exists(Path.Combine(WebRootPath,ImageUrl.Remove(0,1))))
+        //     {
+        //         System.IO.File.Delete(Path.Combine(WebRootPath,ImageUrl.Remove(0,1)));
+        //     }
+        // }
+        //
+        // public async Task EditImageAsync(string WebRootPath)
+        // {
+        //     RemoveImage(WebRootPath);
+        //     await SaveImageAsync(WebRootPath);
+        // }
+        //
+        // public async Task EditImageAsync(string WebRootPath, IFormFile file)
+        // {
+        //     RemoveImage(WebRootPath);
+        //     await SaveImageAsync(WebRootPath, file);
+        // }
     }
 }

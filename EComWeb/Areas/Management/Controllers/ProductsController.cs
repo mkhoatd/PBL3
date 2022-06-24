@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using EComWeb.ExtensionsMethod;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -115,7 +116,7 @@ namespace EComWeb.Areas.Management.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,IsDeleted")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,CategoryId,ManufactureId,Description,Price,Discount,Quantity,ImageUrl,IsDeleted")] Product product)
         {
             if (id != product.Id)
             {
@@ -170,8 +171,9 @@ namespace EComWeb.Areas.Management.Controllers
             {
                 string webRootPath = _hostEnvironment.WebRootPath;
                 await product.EditImageAsync(_hostEnvironment.WebRootPath, image);
+                await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Edit", routeValues: $"{id}");
+            return RedirectToAction("Edit", routeValues: new {id=id});
         }
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
